@@ -1,0 +1,320 @@
+from pathlib import Path
+
+roadmap = """RISC-V CPU PROJECT ROADMAP
+RV32I 5-Stage Pipelined CPU — SystemVerilog RTL + C++ Reference Model
+
+GOAL
+Build a small but technically credible RISC-V CPU project focused on:
+- SystemVerilog RTL
+- Digital design
+- Computer architecture
+- Pipeline design
+- Hazards and forwarding
+- Hardware verification
+- C++ reference modeling
+- Performance analysis
+- Synthesis
+
+CORE PROGRESSION
+RTL Components
+    ↓
+Single-Cycle CPU
+    ↓
+5-Stage Pipeline
+    ↓
+Hazards + Forwarding
+    ↓
+Verification
+    ↓
+Performance Analysis
+    ↓
+Synthesis + Documentation
+
+
+PHASE 1 — INDIVIDUAL RTL COMPONENTS
+
+1. ALU — DONE
+Operations:
+- ADD
+- SUB
+- AND
+- OR
+- XOR
+
+Verification:
+- Testbench
+- Assertions
+- Positive/negative test cases
+
+2. REGISTER FILE — IN PROGRESS
+Build:
+- 32 × 32-bit registers
+- 2 read ports
+- 1 write port
+- Clocked writes
+- x0 behavior
+
+Testbench:
+- Write/read a register
+- Read through both ports
+- Multiple registers
+- Simultaneous reads
+- x0 behavior
+- Attempted write to x0
+
+STOP HERE until the register file is properly verified.
+
+3. INSTRUCTION DECODER
+Implement decoding of:
+- opcode
+- funct3
+- funct7
+
+Generate:
+- ALU operation
+- Register write enable
+- Memory read/write
+- ALU source
+- Branch control
+- Immediate type
+
+Test independently.
+
+4. IMMEDIATE GENERATOR
+Implement:
+- I-type
+- S-type
+- B-type
+
+Test with actual instruction encodings.
+
+5. PROGRAM COUNTER
+Implement:
+- PC ← PC + 4
+- Eventually branch target updates
+
+Test independently.
+
+
+PHASE 2 — SINGLE-CYCLE CPU
+
+Connect:
+- PC
+- Instruction memory
+- Decoder
+- Register file
+- ALU
+- Data memory
+- Writeback logic
+
+Initial instructions:
+- ADD
+- SUB
+- AND
+- OR
+- XOR
+- ADDI
+
+Then:
+- LW
+- SW
+- BEQ
+- BNE
+
+Milestone:
+Run a small program and verify final register values.
+
+
+PHASE 3 — 5-STAGE PIPELINE
+
+Implement:
+IF → ID → EX → MEM → WB
+
+Pipeline registers:
+- IF/ID
+- ID/EX
+- EX/MEM
+- MEM/WB
+
+Goals:
+- Instructions flow through all five stages
+- Pipeline registers hold correct information
+- Multiple instructions execute simultaneously
+
+
+PHASE 4 — HAZARDS
+
+1. DATA HAZARDS
+Example:
+ADD x3, x1, x2
+SUB x4, x3, x5
+
+Implement:
+- Forwarding from EX/MEM
+- Forwarding from MEM/WB
+
+2. LOAD-USE HAZARD
+Example:
+LW  x3, 0(x1)
+ADD x4, x3, x5
+
+Implement:
+- Hazard detection
+- Pipeline stall
+
+3. BRANCH HAZARDS
+Handle taken branches correctly.
+
+
+PHASE 5 — VERIFICATION
+
+SystemVerilog testbench:
+- ALU operations
+- Register file
+- Instructions
+- Branches
+- Memory
+- Pipeline behavior
+- Hazards
+- Forwarding
+- Stalls
+
+Use self-checking assertions.
+
+C++ reference model:
+Same program
+    ↓
+C++ reference model → expected state
+SystemVerilog CPU   → actual state
+    ↓
+Compare
+
+Goal:
+Demonstrate hardware verification + C++.
+
+
+PHASE 6 — PERFORMANCE ANALYSIS
+
+Add counters:
+- cycles
+- instructions
+- CPI
+- stalls
+- branches
+- taken branches
+
+Run multiple programs and analyze:
+- CPI
+- stall frequency
+- branch behavior
+- performance differences
+
+
+PHASE 7 — OPTIONAL ARCHITECTURE FEATURE
+
+Only after the core project is complete.
+
+Choose ONE:
+
+Option A — Simple branch predictor
+- 1-bit or 2-bit predictor
+- Measure CPI before/after
+
+OR
+
+Option B — Small direct-mapped instruction cache
+- Implement a simple cache
+- Measure performance impact
+
+Do not build both unless the core is already finished early.
+
+
+PHASE 8 — SYNTHESIS
+
+Use Yosys to synthesize RTL.
+
+Collect where practical:
+- Area/cell count
+- Flip-flop count
+- Timing information
+- Other synthesis results
+
+Compare baseline vs optimized design if applicable.
+
+
+PHASE 9 — DOCUMENTATION
+
+README:
+1. Overview
+2. Architecture
+3. Instruction Set
+4. Pipeline
+5. Hazard Handling
+6. Verification
+7. Performance
+8. Synthesis
+9. Results
+10. How to Run
+
+Include:
+- Architecture diagrams
+- Pipeline diagrams
+- Verification results
+- Performance tables/graphs
+
+
+HARD BOUNDARIES — DO NOT ADD TO CORE PROJECT
+
+Not part of the core scope:
+- Linux support
+- Full RV32I implementation
+- Out-of-order execution
+- Superscalar execution
+- Multicore
+- GPU
+- AXI
+- PCIe
+- Operating system
+- FPGA board implementation
+- GUI
+- Multiple branch predictors
+- Multiple cache levels
+
+If the core is completed early, add only ONE impressive extension.
+
+
+MASTER CHECKLIST
+
+[✓] 1. ALU
+[ ] 2. Register File
+[ ] 3. Instruction Decoder
+[ ] 4. Immediate Generator
+[ ] 5. Program Counter
+[ ] 6. Instruction Memory
+[ ] 7. Data Memory
+[ ] 8. Single-Cycle CPU
+[ ] 9. Single-Cycle Verification
+[ ] 10. 5-Stage Pipeline
+[ ] 11. Pipeline Verification
+[ ] 12. Forwarding
+[ ] 13. Hazard Detection/Stalls
+[ ] 14. Branch Handling
+[ ] 15. C++ Reference Model
+[ ] 16. Self-Checking Verification
+[ ] 17. Performance Counters
+[ ] 18. Performance Analysis
+[ ] 19. One Optional Optimization
+[ ] 20. Yosys Synthesis
+[ ] 21. README/Architecture Diagrams
+[ ] 22. Final Resume Bullets
+
+
+CURRENT POSITION
+We are currently at #2: Register File.
+
+Keep the project on this sequence unless there is a strong reason to change it.
+"""
+
+path = Path("/mnt/data/RISC-V_CPU_Project_Roadmap.txt")
+path.write_text(roadmap, encoding="utf-8")
+print(path)
