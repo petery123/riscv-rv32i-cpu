@@ -1,0 +1,13 @@
+obj_dir/
+*.vcd
+*.fst
+*.log
+*.jou
+*.wdb
+*.pyc
+*.dat
+__pycache__/
+docs/
+coverage_report/
+
+synth/out/
